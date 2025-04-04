@@ -100,4 +100,4 @@ Development debug scripts are located in the `debug/` directory. These were used
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License, Version 2.0.
