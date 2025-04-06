@@ -11,6 +11,12 @@ The project follows the Clean Architecture pattern with the following layers:
 - **Infrastructure** (`src/infrastructure/`): Repository and service implementations.
 - **API** (`src/api/`): FastAPI routes, dependencies, and middleware.
 
+## Documentation
+
+- [API Documentation](docs/api.md) - Complete API endpoint documentation
+- [Database Schema](docs/database.md) - Database structure and relationships
+- [Development Guide](docs/development.md) - Setup and development guidelines
+
 ## Features
 
 - User authentication with JWT tokens
@@ -25,7 +31,7 @@ The project follows the Clean Architecture pattern with the following layers:
 - Python 3.9+
 - Redis (optional, for caching)
 
-### Installation
+### Quick Start
 
 1. Clone the repository:
    ```bash
@@ -46,57 +52,7 @@ The project follows the Clean Architecture pattern with the following layers:
 
 4. Create a `.env` file (see `.env.example` for reference)
 
-### Running the API
-
-```bash
-python -m src.api.main
-```
-
-Or with Uvicorn directly:
-
-```bash
-uvicorn src.api.main:app --reload
-```
-
-## API Documentation
-
-API documentation is available at:
-
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-## Testing
-
-### Unit Tests
-
-Run tests with pytest:
-
-```bash
-pytest
-```
-
-### End-to-End Testing
-
-A comprehensive end-to-end test script is provided to verify API functionality:
-
-```bash
-python test_script.py
-```
-
-This script tests:
-- User creation and authentication
-- Note creation, reading, updating, and deletion
-- Error handling for invalid operations
-
-You can also run it with the `--flush` flag to reset the database before testing:
-
-```bash
-python test_script.py --flush
-```
-
-### Debug Tools
-
-Development debug scripts are located in the `debug/` directory. These were used during development to troubleshoot specific functionality.
+For detailed setup instructions, see the [Development Guide](docs/development.md).
 
 ## License
 
