@@ -57,8 +57,8 @@ Goal: By following this structure, we keep business logic separate from infrastr
 
 Please start by defining the core entities, DTOs, and repository/service interfaces in src/core/, then move towards implementing the use cases and infrastructure components. Let me know if you have any questions.
 
-
-/your-python-api-service
+```
+/friday-service
 ├── src/                      # Main source directory
 │   │
 │   ├── core/                 # === Contracts & Core Domain ===
@@ -146,3 +146,4 @@ Please start by defining the core entities, DTOs, and repository/service interfa
 ├── .gitignore
 ├── pyproject.toml            # Project definition, dependencies (e.g., Poetry/PDM)
 └── README.md
+```
