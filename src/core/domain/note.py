@@ -1,6 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 
 @dataclass
@@ -10,3 +10,4 @@ class Note:
     user_id: str = ""
     content: str = ""
     created: datetime = datetime.now()
+    embedding: Optional[List[float]] = None  # Vector embedding for semantic search

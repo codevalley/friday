@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     database_url: str = "sqlite+aiosqlite:///./app.db"
     create_tables: bool = True
     
+    # Vector search settings
+    vector_search_enabled: bool = True
+    vector_dimensions: int = 384
+    
     # Redis settings
     redis_url: str = "redis://localhost:6379/0"
     

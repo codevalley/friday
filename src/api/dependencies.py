@@ -8,6 +8,7 @@ from src.core.repositories.note_repo import NoteRepository
 from src.core.repositories.user_repo import UserRepository
 from src.core.services.auth_service import AuthService
 from src.core.services.cache_service import CacheService
+from src.core.services.vector_service import VectorService
 from src.infrastructure.persistence.sqlalchemy import get_db_session
 from src.infrastructure.persistence.sqlalchemy.note_repo import SQLAlchemyNoteRepository
 from src.infrastructure.persistence.sqlalchemy.user_repo import SQLAlchemyUserRepository
@@ -29,6 +30,13 @@ def get_cache_service() -> CacheService:
     return RedisCacheService()
 
 
+# Service dependencies for vector features
+def get_vector_service() -> VectorService:
+    """Get vector service instance"""
+    from src.infrastructure.services.vector.basic_vector_service import BasicVectorService
+    return BasicVectorService()
+
+
 # Repository dependencies
 def get_user_repository(
     session: AsyncSession = Depends(get_db_session)
@@ -37,11 +45,33 @@ def get_user_repository(
     return SQLAlchemyUserRepository(session)
 
 
-def get_note_repository(
-    session: AsyncSession = Depends(get_db_session)
+async def get_note_repository(
+    session: AsyncSession = Depends(get_db_session),
+    vector_service: VectorService = Depends(get_vector_service)
 ) -> NoteRepository:
-    """Get note repository instance"""
-    return SQLAlchemyNoteRepository(session)
+    """Get note repository instance based on database type"""
+    from src.config import get_settings
+    settings = get_settings()
+    
+    if not settings.vector_search_enabled:
+        return SQLAlchemyNoteRepository(session)
+    
+    # Detect database features
+    from src.infrastructure.persistence.utils import get_db_features
+    features = await get_db_features(session.bind)
+    
+    if features.get("vector_search_type") == "pgvector":
+        # Use PostgreSQL with pgvector
+        from src.infrastructure.persistence.sqlalchemy.pg_note_repo import PostgreSQLNoteRepository
+        return PostgreSQLNoteRepository(
+            session, 
+            vector_service,
+            has_vector_support=True
+        )
+    else:
+        # Use regular SQLAlchemy repository 
+        repo = SQLAlchemyNoteRepository(session)
+        return repo
 
 
 # Use case services
