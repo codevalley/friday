@@ -1,0 +1,520 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global focus override */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Editor specific styles */
+.ProseMirror {
+  outline: none !important;
+  min-height: 100px;
+  padding: 0 20px;
+  border: none !important;
+  padding-bottom: 60px; /* Add space for the floating toolbar */
+}
+
+.ProseMirror:focus,
+.ProseMirror:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  ring-width: 0 !important;
+}
+
+.editor-content,
+.editor-content:focus,
+.editor-content:focus-visible,
+.editor-content * {
+  outline: none !important;
+  border-color: transparent !important;
+}
+
+.prose {
+  max-width: none;
+  height: 100%;
+}
+
+.prose h1 {
+  margin-top: 0;
+}
+
+/* Add this new style to fix the first character warping */
+.ProseMirror > * {
+  position: relative;
+  width: 100%;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Table styles */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ProseMirror td,
+.ProseMirror th {
+  border: 2px solid #ced4da;
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 0.5rem;
+  position: relative;
+  vertical-align: top;
+}
+
+.ProseMirror th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Table controls */
+.tableWrapper {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.tableControls {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  display: flex;
+  gap: 4px;
+  background: white;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tableControls button {
+  padding: 2px 6px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tableControls button:hover {
+  background: #e2e8f0;
+}
+
+/* Placeholder text */
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Improved task list styling */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+ul[data-type="taskList"] p {
+  margin: 0;
+}
+
+.task-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.task-item {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+
+.task-item > label {
+  margin-right: 0.5em;
+}
+
+.task-item > label input[type="checkbox"] {
+  margin: 0;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.task-item > div {
+  flex: 1;
+}
+
+.task-item[data-checked="true"] > div > p {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+/* Improve heading styles */
+.ProseMirror h1 {
+  font-size: 1.8em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+}
+
+.ProseMirror h3 {
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+/* Tag styling */
+span[data-type="tag"] {
+  background-color: #f1f5f9;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  color: #64748b;
+}
+
+/* Remove focus styles from all editor-related elements */
+.tiptap,
+.tiptap:focus,
+.tiptap:focus-visible,
+.tiptap *,
+.tiptap *:focus,
+.tiptap *:focus-visible,
+[contenteditable],
+[contenteditable]:focus,
+[contenteditable]:focus-visible {
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  ring-width: 0 !important;
+  --tw-ring-offset-width: 0 !important;
+  --tw-ring-width: 0 !important;
+}
+
+/* Additional override for the editor container */
+.editor-container {
+  outline: none !important;
+  border: none !important;
+  position: relative;
+}
+
+.editor-container:focus-within {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Enhanced floating toolbar styles */
+.floating-toolbar {
+  display: flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e2e8f0;
+  margin: 0 4px;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.toolbar-btn:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.toolbar-btn.active {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1e293b;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  z-index: 60;
+}
+
+.toolbar-btn:hover .tooltip {
+  opacity: 1;
+}
+
+/* Input styles for URL and image inputs */
+.toolbar-input-container {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 4px;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-input {
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  width: 180px;
+  outline: none;
+}
+
+.toolbar-input-btn {
+  padding: 4px 8px;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 4px;
+  margin-left: 2px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.toolbar-input-btn:hover {
+  background-color: #cbd5e1;
+}
+
+/* Simple code block styling without external dependencies */
+pre {
+  background-color: #f8fafc;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: #f1f5f9;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Basic syntax highlighting */
+.ProseMirror pre {
+  background-color: #f8fafc;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  overflow-x: auto;
+  color: #334155;
+}
+
+.ProseMirror pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+/* Simple syntax highlighting for common code elements */
+.ProseMirror pre .keyword {
+  color: #8b5cf6; /* Purple for keywords */
+}
+
+.ProseMirror pre .string {
+  color: #10b981; /* Green for strings */
+}
+
+.ProseMirror pre .comment {
+  color: #94a3b8; /* Gray for comments */
+  font-style: italic;
+}
+
+.ProseMirror pre .number {
+  color: #f59e0b; /* Amber for numbers */
+}
+
+.ProseMirror pre .function {
+  color: #3b82f6; /* Blue for functions */
+  font-weight: 500;
+}
+
+/* Text alignment */
+.ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+.ProseMirror .text-left {
+  text-align: left;
+}
+
+.ProseMirror .text-center {
+  text-align: center;
+}
+
+.ProseMirror .text-right {
+  text-align: right;
+}
+
+/* Note metadata styles */
+.note-metadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.note-metadata-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Tag input styles */
+.tag-input-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.tag-remove {
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.tag-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 60px;
+  font-size: 14px;
+}
+
+/* Embed styles */
+.embed-container {
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.embed-container iframe {
+  width: 100%;
+  border: none;
+}
+
+/* Context menu styles */
+.context-menu {
+  position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  z-index: 100;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.context-menu-item:hover {
+  background-color: #f1f5f9;
+}
+
+/* Drag and drop styles */
+.draggable-note {
+  cursor: grab;
+}
+
+.draggable-note:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.drop-indicator {
+  height: 2px;
+  background-color: #3b82f6;
+  margin: 4px 0;
+}

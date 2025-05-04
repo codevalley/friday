@@ -15,8 +15,8 @@ from src.infrastructure.persistence.sqlalchemy.user_repo import SQLAlchemyUserRe
 from src.infrastructure.services.jwt.auth_service import JWTAuthService
 from src.infrastructure.services.redis.cache_service import RedisCacheService
 
-# OAuth2 setup for token authentication
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# OAuth2 setup for token authentication - use relative URL without leading slash
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/token")
 
 
 # Service dependencies
@@ -53,25 +53,26 @@ async def get_note_repository(
     from src.config import get_settings
     settings = get_settings()
     
-    if not settings.vector_search_enabled:
-        return SQLAlchemyNoteRepository(session)
+    # Import PostgreSQLNoteRepository here to avoid circular imports
+    from src.infrastructure.persistence.sqlalchemy.pg_note_repo import PostgreSQLNoteRepository
     
-    # Detect database features
-    from src.infrastructure.persistence.utils import get_db_features
-    features = await get_db_features(session.bind)
+    # Check if vector search is enabled in settings
+    vector_enabled = getattr(settings, "vector_search_enabled", False)
     
-    if features.get("vector_search_type") == "pgvector":
-        # Use PostgreSQL with pgvector
-        from src.infrastructure.persistence.sqlalchemy.pg_note_repo import PostgreSQLNoteRepository
-        return PostgreSQLNoteRepository(
-            session, 
-            vector_service,
-            has_vector_support=True
-        )
+    # Detect database features if vector search is enabled
+    if vector_enabled:
+        from src.infrastructure.persistence.utils import get_db_features
+        features = await get_db_features(session.bind)
+        has_pgvector = features.get("vector_search_type") == "pgvector"
     else:
-        # Use regular SQLAlchemy repository 
-        repo = SQLAlchemyNoteRepository(session)
-        return repo
+        has_pgvector = False
+    
+    # Always use PostgreSQLNoteRepository with the appropriate has_vector_support flag
+    return PostgreSQLNoteRepository(
+        session, 
+        vector_service,
+        has_vector_support=has_pgvector
+    )
 
 
 # Use case services

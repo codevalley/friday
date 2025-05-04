@@ -106,3 +106,18 @@ class SQLAlchemyNoteRepository(NoteRepository):
             )
             for db_note in db_notes
         ]
+        
+    async def search_by_vector(
+        self, 
+        embedding: List[float], 
+        user_id: Optional[str] = None, 
+        limit: int = 10
+    ) -> List[Note]:
+        """Search notes by vector similarity - Basic implementation without vector search"""
+        # This is a placeholder implementation since this class doesn't support vector search
+        # Just return recent notes instead
+        if user_id:
+            return await self.list_by_user(user_id, skip=0, limit=limit)
+        else:
+            # If no user_id provided, we can't search, so return empty list
+            return []

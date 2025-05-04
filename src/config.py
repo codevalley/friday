@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     create_tables: bool = True
     
     # Vector search settings
-    vector_search_enabled: bool = True
+    vector_search_enabled: bool = False
     vector_dimensions: int = 384
     
     # Redis settings
